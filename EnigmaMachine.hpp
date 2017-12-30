@@ -28,6 +28,9 @@ class EnigmaMachine
     std::shared_ptr<Plugboard> plugboard;
     void initialiseRotors(const std::vector<std::string>& rotor_configs);
     void initialisePlugboard(const std::string& plugboard_config);
+    int getPostRotorsMapping(int prev_val, bool reversed);
+    template<typename Iterator> int passThroughAllRotors(int prev_val,
+      Iterator start, Iterator end);
     char getChar(int index) const;
     int getIndex(char letter) const;
 };
