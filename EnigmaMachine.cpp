@@ -1,4 +1,5 @@
 #include "EnigmaMachine.hpp"
+#include "Utils.hpp"
 #include <iostream>
 
 using std::vector;
@@ -68,15 +69,4 @@ template<typename Iterator> int EnigmaMachine::passThroughAllRotors(int prev_val
   int result = prev_val;
   for (Iterator it = start; it != end; ++it) result = (*it++)->getMapping(result);
   return result;
-}
-
-//TODO: Extract to UTILS file
-char EnigmaMachine::getChar(int index) const
-{
-  return index + ASCII_A_INDEX;
-}
-
-int EnigmaMachine::getIndex(char letter) const
-{
-  return letter - ASCII_A_INDEX;
 }
