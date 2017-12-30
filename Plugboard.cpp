@@ -9,6 +9,7 @@ using std::string;
 
 Plugboard::Plugboard(const string& filename): MappingTool(filename)
 {
+  validateMappingsSize(mappings.size());
   initialiseMap(mappings);
 }
 

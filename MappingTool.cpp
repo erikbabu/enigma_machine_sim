@@ -13,7 +13,7 @@ MappingTool::MappingTool(const string& filename)
 {
   auto inputFile = validateFile(filename);
   mappings = getFileContents(inputFile);
-  validateMappings(mappings);
+  validateMappingsContent(mappings);
 }
 
 ifstream MappingTool::validateFile(const string& filename) const
@@ -38,12 +38,6 @@ vector<int> MappingTool::getFileContents(ifstream& file) const
   while (file >> x) mappings.push_back(x);
 
   return mappings;
-}
-
-void MappingTool::validateMappings(const vector<int>& mappings) const
-{
-  validateMappingsSize(mappings.size());
-  validateMappingsContent(mappings);
 }
 
 void MappingTool::validateMappingsContent(const vector<int>& mappings) const
