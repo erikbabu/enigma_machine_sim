@@ -84,18 +84,18 @@ void Plugboard::initialiseMap(vector<int>& mappings)
   //update map with new mappings
   for(auto it = mappings.begin(); it != mappings.end(); )
   {
-    int first = *it++;
-    int second = *it++;
+    int a = *it++;
+    int b = *it++;
 
     //create "plug"
-    config[first] = second;
-    config[second] = first;
+    config[a] = b;
+    config[b] = a;
   }
 }
 
 int Plugboard::getMapping(int index) const
 {
-  if (index < 0 || index >= NUM_LETTERS)
+  if (!(index >= 0 && index < NUM_LETTERS))
   {
     cerr << "Error: Index out of range." << endl;
     exit(1);
