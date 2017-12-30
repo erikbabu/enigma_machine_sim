@@ -19,7 +19,6 @@ class EnigmaMachine
   public:
     EnigmaMachine(const std::vector<std::string>& rotor_configs,
       const std::string& plugboard_config);
-    EnigmaMachine(const std::string& plugboard_config);
     ~EnigmaMachine() {}
     char encrypt(char letter);
   private:
@@ -27,6 +26,8 @@ class EnigmaMachine
         SHIFT_VALUE, NUM_LETTERS);
     std::vector<std::shared_ptr<Rotor> > rotors;
     std::shared_ptr<Plugboard> plugboard;
+    void initialiseRotors(const std::vector<std::string>& rotor_configs);
+    void initialisePlugboard(const std::string& plugboard_config);
     char getChar(int index) const;
     int getIndex(char letter) const;
 };

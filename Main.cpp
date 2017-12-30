@@ -57,9 +57,8 @@ int main(int argc, char **argv)
   vector<string> rotor_configs = getRotorConfigs(rotor_start, rotor_end);
 
   //set up enigma machine
-  em_s_ptr em_ptr = rotor_configs.empty() ?
-  make_shared<EnigmaMachine>(plugboard_config) :
-  make_shared<EnigmaMachine>(rotor_configs, plugboard_config);
+  em_s_ptr em_ptr =
+    make_shared<EnigmaMachine>(rotor_configs, plugboard_config);
   vector<char> cipher = getCipherText(cin, em_ptr);
 
   //separate input from output

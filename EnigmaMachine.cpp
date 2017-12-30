@@ -2,16 +2,28 @@
 
 using std::vector;
 using std::string;
+using std::shared_ptr;
+using std::make_shared;
 
 EnigmaMachine::EnigmaMachine(const vector<string>& rotor_configs,
   const string& plugboard_config)
 {
-
+  initialiseRotors(rotor_configs);
+  initialisePlugboard(plugboard_config);
 }
 
-EnigmaMachine::EnigmaMachine(const string& plugboard_config)
+void EnigmaMachine::initialisePlugboard(const string& plugboard_config)
 {
+  plugboard = make_shared<Plugboard>(plugboard_config);
+}
 
+void EnigmaMachine::initialiseRotors(const vector<string>& rotor_configs)
+{
+  for (auto it = rotor_configs.begin(); it != rotor_configs.end(); ++it)
+  {
+    shared_ptr<Rotor> rotor = make_shared<Rotor>(*it);
+    rotors.push_back(rotor);
+  }
 }
 
 char EnigmaMachine::encrypt(char letter)
