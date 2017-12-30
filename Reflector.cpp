@@ -4,7 +4,7 @@
 using std::cout;
 using std::endl;
 
-int Reflector::getMapping(int index) const
+int Reflector::reflect(int index) const
 {
   validateInput(index);
   return (index + shift_value) % num_items;

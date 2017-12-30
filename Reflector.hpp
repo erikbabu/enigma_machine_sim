@@ -11,9 +11,9 @@ class Reflector
     Reflector(int shift, int range): shift_value(shift), num_items(range) {}
 
     //params:
-    //index - the value that needs to be shifted
-    //returns the shifted value provided the index is valid
-    int getMapping(int index) const;
+    //index - the value that needs to be reflected
+    //returns the reflected value provided the index is valid
+    int reflect(int index) const;
 
   private:
     const int shift_value;
