@@ -10,7 +10,7 @@ class Plugboard: public MappingTool
   private:
     // void validateMappings(const std::vector<int>& mappings) const;
     void validateMappingsSize(const int num_items) const;
-    void initialiseMap(std::vector<int>& mappings);
+    void initialiseMap(const std::vector<int>& mappings);
 };
 
 #endif

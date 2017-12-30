@@ -22,7 +22,7 @@ void Plugboard::validateMappingsSize(const int num_items) const
   }
 }
 
-void Plugboard::initialiseMap(vector<int>& mappings)
+void Plugboard::initialiseMap(const vector<int>& mappings)
 {
   //default map a number to itself
   for (int i = 0; i < NUM_LETTERS; ++i)

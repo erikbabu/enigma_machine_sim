@@ -21,7 +21,7 @@ class MappingTool
     std::vector<int> getFileContents(std::ifstream& file) const;
     void validateMappingsContent(const std::vector<int>& mappings) const;
     virtual void validateMappingsSize(const int num_items) const = 0;
-    virtual void initialiseMap(std::vector<int>& mappings) = 0;
+    virtual void initialiseMap(const std::vector<int>& mappings) = 0;
 };
 
 #endif

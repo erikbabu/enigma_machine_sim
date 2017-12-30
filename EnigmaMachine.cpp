@@ -44,7 +44,7 @@ char EnigmaMachine::encrypt(char letter)
 
   //SECOND STAGE (rotors, plugboard, output)
   //pass through rotors in reverse order
-  rotor_mapping = getPostRotorsMapping(reflect_index, true);
+  rotor_mapping = getPostRotorsMapping(reflect_index, false);
 
   //pass through plugboard
   plugboard_mapping = plugboard->getMapping(rotor_mapping);
@@ -67,6 +67,6 @@ template<typename Iterator> int EnigmaMachine::passThroughAllRotors(int prev_val
   Iterator start, Iterator end)
 {
   int result = prev_val;
-  for (Iterator it = start; it != end; ++it) result = (*it++)->getMapping(result);
+  for (Iterator it = start; it != end; ++it) result = (*it)->getMapping(result);
   return result;
 }
