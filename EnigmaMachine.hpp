@@ -6,14 +6,16 @@
 #include <memory>
 #include <vector>
 #include "Reflector.hpp"
+#include "Rotor.hpp"
+#include "Plugboard.hpp"
+
+#define NUM_LETTERS 26
+//Using Ceasar(M) cipher (shift by 13)
+#define SHIFT_VALUE 13
 
 //Enigma Machine class
 class EnigmaMachine
 {
-  const int NUM_LETTERS = 26;
-  //Using Ceasar(M) cipher (shift by 13)
-  const int SHIFT_VALUE = 13;
-
   public:
     EnigmaMachine(const std::vector<std::string>& rotor_configs,
       const std::string& plugboard_config);
@@ -23,6 +25,8 @@ class EnigmaMachine
   private:
     std::shared_ptr<Reflector> reflector = std::make_shared<Reflector>(
         SHIFT_VALUE, NUM_LETTERS);
+    std::vector<std::shared_ptr<Rotor> > rotors;
+    std::shared_ptr<Plugboard> plugboard;
     char getChar(int index) const;
     int getIndex(char letter) const;
 };
