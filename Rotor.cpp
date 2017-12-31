@@ -36,10 +36,10 @@ int Rotor::getReverseMapping(const int value) const
   int i;
   for (i = 0; i < NUM_LETTERS; ++i)
   {
-    if (config[i] == value) break;
+    if (config[i] == value) return i;
   }
 
-  return i;
+  return NUM_LETTERS - 1;
 }
 
 void Rotor::rotate()
@@ -50,7 +50,6 @@ void Rotor::rotate()
   temp = config[0];
   for (i = 0; i < NUM_LETTERS; ++i) config[i] = config[i+1];
   config[i] = temp;
-
   updateRotateCounter();
 }
 

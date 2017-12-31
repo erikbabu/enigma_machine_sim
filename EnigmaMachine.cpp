@@ -58,44 +58,47 @@ int EnigmaMachine::getPostRotorsMapping(int prev_val, bool reversed)
 {
   if (rotors.empty()) return prev_val;
 
-  return reversed ?
+  //get result of passing through all rotors
+  int result = reversed ?
     passThroughAllRotors(reversed, prev_val, rotors.rbegin(), rotors.rend()) :
     passThroughAllRotors(reversed, prev_val, rotors.begin(), rotors.end());
+
+  //rotate the rotors if required
+  if (reversed)
+  {
+    rotateRotors(rotors.begin(), rotors.end());
+  }
+
+  return result;
+}
+
+template<typename Iterator> void EnigmaMachine::rotateRotors(
+  Iterator start, Iterator end)
+{
+  //first rotor rotates every time
+  (*start)->rotate();
+  Iterator rot_manager;
+  for (rot_manager = start; rot_manager != end; ++rot_manager)
+  {
+    shared_ptr<Rotor> curr_rotor = *rot_manager;
+    //when current rotor has gone full circle and there is a next rotor
+    //rotate the next rotor
+    if (curr_rotor->isReset() && rot_manager + 1 != end)
+    {
+      shared_ptr<Rotor> next_rotor = *(rot_manager + 1);
+      next_rotor->rotate();
+    }
+    else break;
+  }
 }
 
 template<typename Iterator> int EnigmaMachine::passThroughAllRotors(
   bool reversed, int prev_val, Iterator start, Iterator end)
 {
   int result = prev_val;
-
   for (Iterator it = start; it != end; ++it)
   {
     result = reversed ? (*it)->getReverseMapping(result) : (*it)->getMapping(result);
   }
-
-  //rotate rotors if necessary (only on backwards pass)
-  if (reversed)
-  {
-    //first rotor rotates every time
-    (*start)->rotate();
-    Iterator rot_manager;
-    for (rot_manager = start; rot_manager != end; ++rot_manager)
-    {
-      shared_ptr<Rotor> curr_rotor = *rot_manager;
-      //when current rotor has gone full circle and there is a next rotor
-      //rotate the next rotor
-      if (curr_rotor->isReset() && rot_manager + 1 != end)
-      {
-        shared_ptr<Rotor> next_rotor = *(rot_manager + 1);
-        next_rotor->rotate();
-      }
-      else
-      {
-        //if current has not gone full cirlce, none of the rotors need to update
-        break;
-      }
-    }
-  }
-
   return result;
 }
