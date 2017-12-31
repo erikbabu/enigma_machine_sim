@@ -13,7 +13,7 @@ class Rotor : public MappingTool
   private:
     void validateMappingsSize() const;
     void initialiseMap();
-    // void rotateRotors();
+    void rotateRotor();
 };
 
 #endif

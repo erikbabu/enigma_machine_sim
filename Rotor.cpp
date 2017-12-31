@@ -28,3 +28,13 @@ void Rotor::initialiseMap()
     config[i] = mappings[i];
   }
 }
+
+void Rotor::rotateRotor()
+{
+  int i;
+  int temp;
+  //shift all the elements to the left by one index
+  temp = config[0];
+  for (i = 0; i < NUM_LETTERS; ++i) config[i] = config[i+1];
+  config[i] = temp;
+}
