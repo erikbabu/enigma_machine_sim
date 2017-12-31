@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Rotor.hpp"
+#include "Utils.hpp"
 
 using std::string;
 using std::cerr;
@@ -32,14 +33,13 @@ void Rotor::initialiseMap()
 int Rotor::getReverseMapping(const int value) const
 {
   validateInput(value);
-
   int i;
   for (i = 0; i < NUM_LETTERS; ++i)
   {
     if (config[i] == value) return i;
   }
 
-  return NUM_LETTERS - 1;
+  return --i;
 }
 
 void Rotor::rotate()
@@ -49,7 +49,8 @@ void Rotor::rotate()
   //shift all the elements to the left by one index
   temp = config[0];
   for (i = 0; i < NUM_LETTERS; ++i) config[i] = config[i+1];
-  config[i] = temp;
+  config[--i] = temp;
+
   updateRotateCounter();
 }
 
