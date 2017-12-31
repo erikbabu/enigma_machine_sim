@@ -18,7 +18,6 @@ class Reflector
   private:
     const int shift_value;
     const int num_items;
-    void validateInput(int index) const;
 };
 
 #endif

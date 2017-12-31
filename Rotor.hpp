@@ -17,6 +17,8 @@ class Rotor : public MappingTool
     int rotates = 0;
     void validateMappingsSize() const;
     void initialiseMap();
+    int reverseLookup(const int value) const;
+    int outputShifted(const int index) const;
     void updateRotateCounter();
 };
 

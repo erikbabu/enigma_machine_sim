@@ -1,5 +1,6 @@
 #include <iostream>
 #include "MappingTool.hpp"
+#include "Utils.hpp"
 
 using std::map;
 using std::vector;
@@ -64,13 +65,4 @@ int MappingTool::getMapping(const int index) const
 {
   validateInput(index);
   return config[index];
-}
-
-void MappingTool::validateInput(const int index) const
-{
-  if (!(index >= 0 && index < NUM_LETTERS))
-  {
-    cerr << "Error: Out of bounds input!" << endl;
-    exit(1);
-  }
 }

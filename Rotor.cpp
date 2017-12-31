@@ -32,14 +32,29 @@ void Rotor::initialiseMap()
 
 int Rotor::getReverseMapping(const int value) const
 {
-  validateInput(value);
+  ::validateInput(value);
+  // int shifted_output = outputShifted(value);
+  return reverseLookup(value);
+}
+
+int Rotor::reverseLookup(const int value) const
+{
   int i;
   for (i = 0; i < NUM_LETTERS; ++i)
   {
     if (config[i] == value) return i;
   }
 
-  return --i;
+  return NUM_LETTERS - 1;
+}
+
+int Rotor::outputShifted(const int index) const
+{
+  if (rotates % 2 == 0) return index;
+
+  int value_shifted = (index - rotates - 1);
+  value_shifted = (value_shifted >= 0) ? value_shifted : NUM_LETTERS - 1 + value_shifted;
+  return reverseLookup(value_shifted);
 }
 
 void Rotor::rotate()
