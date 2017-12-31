@@ -27,7 +27,7 @@ void Plugboard::initialiseMap(const vector<int>& mappings)
   //default map a number to itself
   for (int i = 0; i < NUM_LETTERS; ++i)
   {
-    config.insert({i, i});
+    config[i] = i;
   }
 
   //update map with new mappings

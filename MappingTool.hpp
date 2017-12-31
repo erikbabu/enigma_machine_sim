@@ -16,7 +16,7 @@ class MappingTool
 
   protected:
     std::vector<int> mappings;
-    std::map<int, int> config;
+    int config[NUM_LETTERS];
     std::ifstream validateFile(const std::string& filename) const;
     std::vector<int> getFileContents(std::ifstream& file) const;
     void validateMappingsContent(const std::vector<int>& mappings) const;

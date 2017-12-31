@@ -25,6 +25,6 @@ void Rotor::initialiseMap(const vector<int>& mappings)
 {
   for (int i = 0; i < NUM_LETTERS; ++i)
   {
-    config.insert({i, mappings[i]});
+    config[i] = mappings[i];
   }
 }

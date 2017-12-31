@@ -68,6 +68,5 @@ int MappingTool::getMapping(int index) const
     exit(1);
   }
 
-  auto it = config.find(index);
-  return it->second;
+  return config[index];
 }
