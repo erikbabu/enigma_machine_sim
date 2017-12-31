@@ -33,10 +33,9 @@ ifstream MappingTool::validateFile(const string& filename) const
 vector<int> MappingTool::getFileContents(ifstream& file) const
 {
   //return all numbers stored in the file
-  int x;
+  char c;
   vector<int> mappings;
-  while (file >> x) mappings.push_back(x);
-
+  while (file >> c) mappings.push_back(getIndex(c));
   return mappings;
 }
 
