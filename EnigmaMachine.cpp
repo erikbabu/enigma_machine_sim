@@ -1,4 +1,5 @@
 #include "EnigmaMachine.hpp"
+#include <iostream>
 
 using std::vector;
 using std::string;
@@ -44,6 +45,9 @@ char EnigmaMachine::encrypt(char letter)
   //pass through rotors in reverse order
   rotor_mapping = getPostRotorsMapping(reflect_index, true);
 
+  //rotate the rotors afterwards
+  rotateRotors(rotors.begin(), rotors.end());
+
   //pass through plugboard
   plugboard_mapping = plugboard->getMapping(rotor_mapping);
 
@@ -56,22 +60,17 @@ int EnigmaMachine::getPostRotorsMapping(int prev_val, bool reversed)
   if (rotors.empty()) return prev_val;
 
   //get result of passing through all rotors
-  int result = reversed ?
+  return reversed ?
     passThroughAllRotors(reversed, prev_val, rotors.rbegin(), rotors.rend()) :
     passThroughAllRotors(reversed, prev_val, rotors.begin(), rotors.end());
-
-  //rotate the rotors if required
-  if (reversed)
-  {
-    rotateRotors(rotors.begin(), rotors.end());
-  }
-
-  return result;
 }
 
 template<typename Iterator> void EnigmaMachine::rotateRotors(
   Iterator start, Iterator end)
 {
+  //if no rotors, do nothing
+  if (start == end) return;
+
   //first rotor rotates every time
   (*start)->rotate();
   Iterator rot_manager;
@@ -93,9 +92,26 @@ template<typename Iterator> int EnigmaMachine::passThroughAllRotors(
   bool reversed, int prev_val, Iterator start, Iterator end)
 {
   int result = prev_val;
+  int normal_val = 0;
   for (Iterator it = start; it != end; ++it)
   {
-    result = reversed ? (*it)->getReverseMapping(result) : (*it)->getMapping(result);
+    shared_ptr<Rotor> current = *it;
+
+    if (reversed)
+      result = current->getReverseMapping(result);
+    else
+    {
+      //TODO: Fix issue here.
+      //incorrect value being passed into normalisedValue
+      //rest seems to be correct
+      std::cerr << "Num rotations: " << normal_val << std::endl;
+      std::cerr << "Result before: " << result << std::endl;
+      result = current->getMapping(current->normalisedValue(result - normal_val));
+      std::cerr << "Result after: " << result << std::endl;
+    }
+
+    //normalise input into next rotor
+    normal_val = current->numRotations();
   }
   return result;
 }

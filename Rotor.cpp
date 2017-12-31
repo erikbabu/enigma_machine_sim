@@ -63,3 +63,8 @@ void Rotor::updateRotateCounter()
 {
   rotates = (rotates + 1) % (NUM_LETTERS);
 }
+
+int Rotor::normalisedValue(const int current) const
+{
+  return (current % NUM_LETTERS >= 0) ? current : NUM_LETTERS + current;
+}

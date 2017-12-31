@@ -20,7 +20,15 @@ class Rotor : public MappingTool
     //params:
     //index - the index of the letter
     //returns the value at the index mapping
-    int getReverseMapping(int index) const;
+    int getReverseMapping(const int index) const;
+
+    //params:
+    //current - the rotated value that needs to be normalised
+    //returns the value that will be used to normalise input into next rotor
+    int normalisedValue(const int current) const;
+
+    //returns the number of rotations out of 26 the rotor has performed
+    int numRotations() const { return rotates; }
 
   private:
 
