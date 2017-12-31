@@ -8,20 +8,20 @@ using std::endl;
 
 Rotor::Rotor(const string& filename) : MappingTool(filename)
 {
-  validateMappingsSize(mappings.size());
-  initialiseMap(mappings);
+  validateMappingsSize();
+  initialiseMap();
 }
 
-void Rotor::validateMappingsSize(const int num_items) const
+void Rotor::validateMappingsSize() const
 {
-  if (num_items != NUM_LETTERS)
+  if (mappings.size() != NUM_LETTERS)
   {
     cerr << "Error: Should be 26 numbers in file from 0-25 inclusive!" << endl;
     exit(1);
   }
 }
 
-void Rotor::initialiseMap(const vector<int>& mappings)
+void Rotor::initialiseMap()
 {
   for (int i = 0; i < NUM_LETTERS; ++i)
   {

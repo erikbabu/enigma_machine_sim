@@ -9,8 +9,8 @@ class Plugboard: public MappingTool
     Plugboard(const std::string& filename);
   private:
     // void validateMappings(const std::vector<int>& mappings) const;
-    void validateMappingsSize(const int num_items) const;
-    void initialiseMap(const std::vector<int>& mappings);
+    void validateMappingsSize() const;
+    void initialiseMap();
 };
 
 #endif

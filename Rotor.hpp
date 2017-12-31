@@ -11,8 +11,9 @@ class Rotor : public MappingTool
   public:
     Rotor(const std::string& filename);
   private:
-    void validateMappingsSize(const int num_items) const;
-    void initialiseMap(const std::vector<int>& mappings);
+    void validateMappingsSize() const;
+    void initialiseMap();
+    // void rotateRotors();
 };
 
 #endif

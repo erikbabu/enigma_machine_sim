@@ -13,7 +13,7 @@ MappingTool::MappingTool(const string& filename)
 {
   auto inputFile = validateFile(filename);
   mappings = getFileContents(inputFile);
-  validateMappingsContent(mappings);
+  validateMappingsContent();
 }
 
 ifstream MappingTool::validateFile(const string& filename) const
@@ -40,7 +40,7 @@ vector<int> MappingTool::getFileContents(ifstream& file) const
   return mappings;
 }
 
-void MappingTool::validateMappingsContent(const vector<int>& mappings) const
+void MappingTool::validateMappingsContent() const
 {
   //create array storing 26 booleans all set to false
   bool numbers_parsed[NUM_LETTERS];

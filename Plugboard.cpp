@@ -9,20 +9,20 @@ using std::string;
 
 Plugboard::Plugboard(const string& filename): MappingTool(filename)
 {
-  validateMappingsSize(mappings.size());
-  initialiseMap(mappings);
+  validateMappingsSize();
+  initialiseMap();
 }
 
-void Plugboard::validateMappingsSize(const int num_items) const
+void Plugboard::validateMappingsSize() const
 {
-  if (num_items % 2 != 0)
+  if (mappings.size() % 2 != 0)
   {
     cerr << "Error: The number of items should be even." << endl;
     exit(1);
   }
 }
 
-void Plugboard::initialiseMap(const vector<int>& mappings)
+void Plugboard::initialiseMap()
 {
   //default map a number to itself
   for (int i = 0; i < NUM_LETTERS; ++i)

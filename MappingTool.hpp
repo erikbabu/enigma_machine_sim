@@ -19,9 +19,9 @@ class MappingTool
     int config[NUM_LETTERS];
     std::ifstream validateFile(const std::string& filename) const;
     std::vector<int> getFileContents(std::ifstream& file) const;
-    void validateMappingsContent(const std::vector<int>& mappings) const;
-    virtual void validateMappingsSize(const int num_items) const = 0;
-    virtual void initialiseMap(const std::vector<int>& mappings) = 0;
+    void validateMappingsContent() const;
+    virtual void validateMappingsSize() const = 0;
+    virtual void initialiseMap() = 0;
 };
 
 #endif
