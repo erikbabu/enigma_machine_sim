@@ -12,8 +12,7 @@ class MappingTool
 {
   public:
     MappingTool(const std::string& filename);
-    int getMapping(int index) const;
-
+    int getMapping(const int index) const;
   protected:
     std::vector<int> mappings;
     int config[NUM_LETTERS];
@@ -22,6 +21,7 @@ class MappingTool
     void validateMappingsContent() const;
     virtual void validateMappingsSize() const = 0;
     virtual void initialiseMap() = 0;
+    void validateInput(const int index) const;
 };
 
 #endif

@@ -10,10 +10,14 @@ class Rotor : public MappingTool
 {
   public:
     Rotor(const std::string& filename);
+    void rotate();
+    bool isReset() const { return rotates == 0; }
+    int getReverseMapping(int index) const;
   private:
+    int rotates = 0;
     void validateMappingsSize() const;
     void initialiseMap();
-    void rotateRotor();
+    void updateRotateCounter();
 };
 
 #endif

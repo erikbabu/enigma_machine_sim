@@ -40,8 +40,8 @@ class EnigmaMachine
     int getPostRotorsMapping(int prev_val, bool reversed);
 
     //helper function for getPostRotorsMapping
-    template<typename Iterator> int passThroughAllRotors(int prev_val,
-      Iterator start, Iterator end);
+    template<typename Iterator> int passThroughAllRotors(bool reversed,
+      int prev_val, Iterator start, Iterator end);
 };
 
 #endif

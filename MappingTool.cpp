@@ -60,13 +60,17 @@ void MappingTool::validateMappingsContent() const
   }
 }
 
-int MappingTool::getMapping(int index) const
+int MappingTool::getMapping(const int index) const
+{
+  validateInput(index);
+  return config[index];
+}
+
+void MappingTool::validateInput(const int index) const
 {
   if (!(index >= 0 && index < NUM_LETTERS))
   {
-    cerr << "Error: Index out of range." << endl;
+    cerr << "Error: Out of bounds input!" << endl;
     exit(1);
   }
-
-  return config[index];
 }

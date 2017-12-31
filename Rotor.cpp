@@ -29,7 +29,20 @@ void Rotor::initialiseMap()
   }
 }
 
-void Rotor::rotateRotor()
+int Rotor::getReverseMapping(const int value) const
+{
+  validateInput(value);
+
+  int i;
+  for (i = 0; i < NUM_LETTERS; ++i)
+  {
+    if (config[i] == value) break;
+  }
+
+  return i;
+}
+
+void Rotor::rotate()
 {
   int i;
   int temp;
@@ -37,4 +50,11 @@ void Rotor::rotateRotor()
   temp = config[0];
   for (i = 0; i < NUM_LETTERS; ++i) config[i] = config[i+1];
   config[i] = temp;
+
+  updateRotateCounter();
+}
+
+void Rotor::updateRotateCounter()
+{
+  rotates = (rotates + 1) % (NUM_LETTERS);
 }

@@ -44,7 +44,7 @@ char EnigmaMachine::encrypt(char letter)
 
   //SECOND STAGE (rotors, plugboard, output)
   //pass through rotors in reverse order
-  rotor_mapping = getPostRotorsMapping(reflect_index, false);
+  rotor_mapping = getPostRotorsMapping(reflect_index, true);
 
   //pass through plugboard
   plugboard_mapping = plugboard->getMapping(rotor_mapping);
@@ -59,14 +59,43 @@ int EnigmaMachine::getPostRotorsMapping(int prev_val, bool reversed)
   if (rotors.empty()) return prev_val;
 
   return reversed ?
-    passThroughAllRotors(prev_val, rotors.rbegin(), rotors.rend()) :
-    passThroughAllRotors(prev_val, rotors.begin(), rotors.end());
+    passThroughAllRotors(reversed, prev_val, rotors.rbegin(), rotors.rend()) :
+    passThroughAllRotors(reversed, prev_val, rotors.begin(), rotors.end());
 }
 
-template<typename Iterator> int EnigmaMachine::passThroughAllRotors(int prev_val,
-  Iterator start, Iterator end)
+template<typename Iterator> int EnigmaMachine::passThroughAllRotors(
+  bool reversed, int prev_val, Iterator start, Iterator end)
 {
   int result = prev_val;
-  for (Iterator it = start; it != end; ++it) result = (*it)->getMapping(result);
+
+  for (Iterator it = start; it != end; ++it)
+  {
+    result = reversed ? (*it)->getReverseMapping(result) : (*it)->getMapping(result);
+  }
+
+  //rotate rotors if necessary (only on backwards pass)
+  if (reversed)
+  {
+    //first rotor rotates every time
+    (*start)->rotate();
+    Iterator rot_manager;
+    for (rot_manager = start; rot_manager != end; ++rot_manager)
+    {
+      shared_ptr<Rotor> curr_rotor = *rot_manager;
+      //when current rotor has gone full circle and there is a next rotor
+      //rotate the next rotor
+      if (curr_rotor->isReset() && rot_manager + 1 != end)
+      {
+        shared_ptr<Rotor> next_rotor = *(rot_manager + 1);
+        next_rotor->rotate();
+      }
+      else
+      {
+        //if current has not gone full cirlce, none of the rotors need to update
+        break;
+      }
+    }
+  }
+
   return result;
 }
