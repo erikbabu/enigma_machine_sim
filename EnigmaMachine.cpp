@@ -1,6 +1,4 @@
 #include "EnigmaMachine.hpp"
-#include "Utils.hpp"
-#include <iostream>
 
 using std::vector;
 using std::string;
@@ -50,8 +48,7 @@ char EnigmaMachine::encrypt(char letter)
   plugboard_mapping = plugboard->getMapping(rotor_mapping);
 
   //output
-  letter = getChar(plugboard_mapping);
-  return letter;
+  return getChar(plugboard_mapping);
 }
 
 int EnigmaMachine::getPostRotorsMapping(int prev_val, bool reversed)
@@ -77,19 +74,19 @@ template<typename Iterator> void EnigmaMachine::rotateRotors(
 {
   //first rotor rotates every time
   (*start)->rotate();
-  // Iterator rot_manager;
-  // for (rot_manager = start; rot_manager != end; ++rot_manager)
-  // {
-  //   shared_ptr<Rotor> curr_rotor = *rot_manager;
-  //   //when current rotor has gone full circle and there is a next rotor
-  //   //rotate the next rotor
-  //   if (curr_rotor->isReset() && rot_manager + 1 != end)
-  //   {
-  //     shared_ptr<Rotor> next_rotor = *(rot_manager + 1);
-  //     next_rotor->rotate();
-  //   }
-  //   else break;
-  // }
+  Iterator rot_manager;
+  for (rot_manager = start; rot_manager != end; ++rot_manager)
+  {
+    shared_ptr<Rotor> curr_rotor = *rot_manager;
+    //when current rotor has gone full circle and there is a next rotor
+    //rotate the next rotor
+    if (curr_rotor->isReset() && rot_manager + 1 != end)
+    {
+      shared_ptr<Rotor> next_rotor = *(rot_manager + 1);
+      next_rotor->rotate();
+    }
+    else break;
+  }
 }
 
 template<typename Iterator> int EnigmaMachine::passThroughAllRotors(

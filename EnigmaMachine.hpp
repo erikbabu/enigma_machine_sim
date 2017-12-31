@@ -7,7 +7,6 @@
 #include "Rotor.hpp"
 #include "Plugboard.hpp"
 
-#define NUM_LETTERS 26
 //Using Ceasar(M) cipher (shift by 13)
 #define SHIFT_VALUE 13
 
@@ -15,6 +14,7 @@
 class EnigmaMachine
 {
   public:
+
     //params:
     //rotor_configs - filenames of all rotor files
     //plugboard_config - filename of plugboard file
@@ -27,12 +27,21 @@ class EnigmaMachine
     char encrypt(char letter);
 
   private:
+
+    //representation of "reflector"
     std::shared_ptr<Reflector> reflector = std::make_shared<Reflector>(
         SHIFT_VALUE, NUM_LETTERS);
+
+    //representation of 0/many "rotors"
     std::vector<std::shared_ptr<Rotor> > rotors;
+
+    //representation of single "plugboard"
     std::shared_ptr<Plugboard> plugboard;
 
+    //given the rotorfile(s), creates and sets up rotors
     void initialiseRotors(const std::vector<std::string>& rotor_configs);
+
+    //given the plugboard config file, creates and sets up plugboard
     void initialisePlugboard(const std::string& plugboard_config);
 
     //returns value after input has passed through all rotors
@@ -42,6 +51,8 @@ class EnigmaMachine
     //helper function for getPostRotorsMapping
     template<typename Iterator> int passThroughAllRotors(bool reversed,
       int prev_val, Iterator start, Iterator end);
+
+    //helper function for getPostRotorsMapping
     template<typename Iterator> void rotateRotors(Iterator start, Iterator end);
 };
 

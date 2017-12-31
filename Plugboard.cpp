@@ -1,7 +1,6 @@
 #include <iostream>
 #include "Plugboard.hpp"
 
-using std::map;
 using std::vector;
 using std::cerr;
 using std::endl;

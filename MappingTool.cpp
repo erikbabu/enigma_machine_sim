@@ -2,7 +2,6 @@
 #include "MappingTool.hpp"
 #include "Utils.hpp"
 
-using std::map;
 using std::vector;
 using std::ifstream;
 using std::cerr;

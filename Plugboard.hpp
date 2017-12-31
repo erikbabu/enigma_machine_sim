@@ -6,10 +6,18 @@
 class Plugboard: public MappingTool
 {
   public:
+
+    //params:
+    //filename - the file containing the Plugboard configs
     Plugboard(const std::string& filename);
+
   private:
-    // void validateMappings(const std::vector<int>& mappings) const;
+
+    //ensures that there are an even number of mappings
     void validateMappingsSize() const;
+
+    //creates mapping based on config file. if no mapping give, item maps
+    //to itself
     void initialiseMap();
 };
 

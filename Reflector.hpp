@@ -1,10 +1,10 @@
 #ifndef REFLECTOR_GUARD_HPP
 #define REFLECTOR_GUARD_HPP
 
-//Reflector class
 class Reflector
 {
   public:
+
     //params:
     //shift - the value each index should be shifted by
     //range - the total number of possible indices
@@ -16,7 +16,11 @@ class Reflector
     int reflect(int index) const;
 
   private:
+
+    //the number to shift each letter by
     const int shift_value;
+
+    //the number of items in the range
     const int num_items;
 };
 
