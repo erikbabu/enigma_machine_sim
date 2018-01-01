@@ -52,8 +52,9 @@ int main(int argc, char **argv)
 
   //store positions of rotors and plugboard
   auto rotor_start = argv + 1;
-  auto rotor_end = argv + argc - 1;
-  auto plugboard_config = argv[argc - 1];
+  auto rotor_end = argv + argc - 2;
+  auto plugboard_config = argv[argc - 2];
+  auto reflector_config = argv[argc - 1];
 
   int num_rotors = distance(rotor_start, rotor_end);
   vector<char> notch_configs;
@@ -72,7 +73,8 @@ int main(int argc, char **argv)
 
   //set up enigma machine
   em_s_ptr em_ptr =
-    make_shared<EnigmaMachine>(rotor_configs, notch_configs, plugboard_config);
+    make_shared<EnigmaMachine>(
+      rotor_configs, notch_configs, plugboard_config, reflector_config);
 
   cout << "Please enter the message you would like to encrypt, followed by ctrl + d:"
     << endl;

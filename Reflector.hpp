@@ -1,14 +1,15 @@
 #ifndef REFLECTOR_GUARD_HPP
 #define REFLECTOR_GUARD_HPP
 
-class Reflector
+#include "MappingTool.hpp"
+
+class Reflector : public MappingTool
 {
   public:
 
     //params:
-    //shift - the value each index should be shifted by
-    //range - the total number of possible indices
-    Reflector(int shift, int range): shift_value(shift), num_items(range) {}
+    //filename - file containing reflector configurations
+    Reflector(const std::string& filename);
 
     //params:
     //index - the value that needs to be reflected
@@ -17,11 +18,11 @@ class Reflector
 
   private:
 
-    //the number to shift each letter by
-    const int shift_value;
+    //ensures that there are 26 unique letters in the mapping
+    void validateMappingsSize() const;
 
-    //the number of items in the range
-    const int num_items;
+    //configures map to specified rotor configurations
+    void initialiseMap();
 };
 
 #endif

@@ -10,6 +10,7 @@ class MappingTool
 {
   friend class Plugboard;
   friend class Rotor;
+  friend class Reflector;
 
   public:
 

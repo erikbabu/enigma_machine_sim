@@ -14,7 +14,6 @@ class Rotor : public MappingTool
     //"rotates" the rotor by one turn.
     void rotate();
 
-
     //returns whether or not the rotor has completed a full round
     bool isReset() const { return rotates == 0; }
 

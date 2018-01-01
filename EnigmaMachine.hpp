@@ -7,9 +7,6 @@
 #include "Rotor.hpp"
 #include "Plugboard.hpp"
 
-//Using Ceasar(M) cipher (shift by 13)
-#define SHIFT_VALUE 13
-
 //Enigma Machine class
 class EnigmaMachine
 {
@@ -19,9 +16,11 @@ class EnigmaMachine
     //rotor_configs - filenames of all rotor files
     //notch_configs - notch configurations for each rotor
     //plugboard_config - filename of plugboard file
+    //reflector_config - filename of reflector file
     EnigmaMachine(const std::vector<std::string>& rotor_configs,
       const std::vector<char>& notch_configs,
-      const std::string& plugboard_config);
+      const std::string& plugboard_config,
+      const std::string& reflector_config);
 
     //params:
     //letter - the char that is going to be encrypted by enigma
@@ -31,8 +30,7 @@ class EnigmaMachine
   private:
 
     //representation of "reflector"
-    std::shared_ptr<Reflector> reflector = std::make_shared<Reflector>(
-        SHIFT_VALUE, NUM_LETTERS);
+    std::shared_ptr<Reflector> reflector;
 
     //representation of 0/many "rotors"
     std::vector<std::shared_ptr<Rotor> > rotors;
@@ -46,6 +44,9 @@ class EnigmaMachine
 
     //given the plugboard config file, creates and sets up plugboard
     void initialisePlugboard(const std::string& plugboard_config);
+
+    //given the reflector config file, creates and sets up reflector
+    void initialiseReflector(const std::string& reflector_config);
 
     //returns value after input has passed through all rotors
     //if reversed, returns value after input passes in reverse order

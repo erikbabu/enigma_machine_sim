@@ -10,10 +10,17 @@ using std::endl;
 
 EnigmaMachine::EnigmaMachine(const vector<string>& rotor_configs,
   const vector<char>& notch_configs,
-  const string& plugboard_config)
+  const string& plugboard_config,
+  const string& reflector_config)
 {
   initialisePlugboard(plugboard_config);
   initialiseRotors(rotor_configs, notch_configs);
+  initialiseReflector(reflector_config);
+}
+
+void EnigmaMachine::initialiseReflector(const std::string& reflector_config)
+{
+  reflector = std::make_shared<Reflector>(reflector_config);
 }
 
 void EnigmaMachine::initialisePlugboard(const string& plugboard_config)
