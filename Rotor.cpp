@@ -1,10 +1,8 @@
 #include <iostream>
 #include "Rotor.hpp"
-#include "Utils.hpp"
 
 using std::string;
 using std::cerr;
-using std::vector;
 using std::endl;
 
 Rotor::Rotor(const string& filename, const char notch_position) :
@@ -12,7 +10,7 @@ Rotor::Rotor(const string& filename, const char notch_position) :
 {
   validateMappingsSize();
   initialiseMap();
-  
+
   //set up rotor to match notch config
   for (int i = 0; i < getIndex(notch_position); ++i) leftRotate();
 }

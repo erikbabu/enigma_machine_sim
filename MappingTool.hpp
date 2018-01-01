@@ -5,7 +5,7 @@
 #include <vector>
 #include "Utils.hpp"
 
-//superclass for enigma machine parts (rotor/plugboard)
+//superclass for enigma machine parts (rotor/plugboard/reflector)
 class MappingTool
 {
   friend class Plugboard;

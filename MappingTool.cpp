@@ -1,6 +1,5 @@
 #include <iostream>
 #include "MappingTool.hpp"
-#include "Utils.hpp"
 
 using std::vector;
 using std::ifstream;
