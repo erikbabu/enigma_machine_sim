@@ -52,6 +52,9 @@ class EnigmaMachine
     template<typename Iterator> int passThroughAllRotors(bool reversed,
       int prev_val, Iterator start, Iterator end);
 
+    //returns whether current rotor has a next
+    template<typename Iterator> bool hasNextRotor(Iterator current, Iterator end);
+
     //helper function for getPostRotorsMapping
     template<typename Iterator> void rotateRotors(Iterator start, Iterator end);
 };

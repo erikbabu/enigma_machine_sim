@@ -9,10 +9,11 @@ class Rotor : public MappingTool
 
     //params:
     //filename - filename containing rotor configuration
-    Rotor(const std::string& filename);
+    Rotor(const std::string& filename, const int notch_position=0);
 
     //"rotates" the rotor by one turn.
     void rotate();
+
 
     //returns whether or not the rotor has completed a full round
     bool isReset() const { return rotates == 0; }
@@ -22,13 +23,11 @@ class Rotor : public MappingTool
     //returns the value at the index mapping
     int getReverseMapping(const int index) const;
 
-    //params:
-    //current - the rotated value that needs to be normalised
-    //returns the value that will be used to normalise input into next rotor
-    int normalisedValue(const int current) const;
-
     //returns the number of rotations out of 26 the rotor has performed
     int numRotations() const { return rotates; }
+
+    //normalises the rotors. i.e. shift all items to the right by 1 index
+    void normalise();
 
   private:
 
@@ -46,6 +45,9 @@ class Rotor : public MappingTool
 
     //increments the rotor counter, resetting it everytime it reaches 26
     void updateRotateCounter();
+
+    //shift all the elements to the left by one index
+    void leftRotate();
 };
 
 #endif

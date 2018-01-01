@@ -7,10 +7,18 @@ using std::cerr;
 using std::vector;
 using std::endl;
 
-Rotor::Rotor(const string& filename) : MappingTool(filename)
+Rotor::Rotor(const string& filename, const int notch_position) :
+  MappingTool(filename)
 {
   validateMappingsSize();
   initialiseMap();
+
+  //set up rotors to match notch config
+  for (int i = 0; i < notch_position; ++i)
+  {
+    leftRotate();
+    normalise();
+  }
 }
 
 void Rotor::validateMappingsSize() const
@@ -49,13 +57,7 @@ int Rotor::reverseLookup(const int value) const
 
 void Rotor::rotate()
 {
-  int i;
-  int temp;
-  //shift all the elements to the left by one index
-  temp = config[0];
-  for (i = 0; i < NUM_LETTERS; ++i) config[i] = config[i+1];
-  config[NUM_LETTERS - 1] = temp;
-
+  leftRotate();
   updateRotateCounter();
 }
 
@@ -64,7 +66,19 @@ void Rotor::updateRotateCounter()
   rotates = (rotates + 1) % (NUM_LETTERS);
 }
 
-int Rotor::normalisedValue(const int current) const
+void Rotor::normalise()
 {
-  return (current % NUM_LETTERS >= 0) ? current : NUM_LETTERS + current;
+  int i;
+  int temp = config[NUM_LETTERS - 1];
+  //shift all elements to the right by one index
+  for (i = NUM_LETTERS - 1; i >= 0; --i) config[i] = config[i - 1];
+  config[0] = temp;
+}
+
+void Rotor::leftRotate()
+{
+  int i;
+  int temp = config[0];
+  for (i = 0; i < NUM_LETTERS; ++i) config[i] = config[i+1];
+  config[NUM_LETTERS - 1] = temp;
 }

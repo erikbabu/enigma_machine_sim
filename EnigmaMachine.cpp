@@ -73,45 +73,47 @@ template<typename Iterator> void EnigmaMachine::rotateRotors(
 
   //first rotor rotates every time
   (*start)->rotate();
+
+  //noralise next rotor if it exists
+  if (hasNextRotor(start, end))
+  {
+    auto second_rotor = *(start + 1);
+    second_rotor->normalise();
+  }
+
   Iterator rot_manager;
   for (rot_manager = start; rot_manager != end; ++rot_manager)
   {
-    shared_ptr<Rotor> curr_rotor = *rot_manager;
-    //when current rotor has gone full circle and there is a next rotor
+    auto curr_rotor = *rot_manager;
+    //when current rotor has gone full circle and there is another rotor
     //rotate the next rotor
-    if (curr_rotor->isReset() && rot_manager + 1 != end)
+    //if rotated rotor has next, normalise the inputs into the next
+    if (curr_rotor->isReset() && hasNextRotor(rot_manager, end))
     {
       shared_ptr<Rotor> next_rotor = *(rot_manager + 1);
       next_rotor->rotate();
+
+      if (hasNextRotor(rot_manager + 1, end)) next_rotor->normalise();
     }
     else break;
   }
+}
+
+template<typename Iterator> bool EnigmaMachine::hasNextRotor(
+  Iterator current, Iterator end)
+{
+  return current + 1 != end;
 }
 
 template<typename Iterator> int EnigmaMachine::passThroughAllRotors(
   bool reversed, int prev_val, Iterator start, Iterator end)
 {
   int result = prev_val;
-  int normal_val = 0;
   for (Iterator it = start; it != end; ++it)
   {
     shared_ptr<Rotor> current = *it;
-
-    if (reversed)
-      result = current->getReverseMapping(result);
-    else
-    {
-      //TODO: Fix issue here.
-      //incorrect value being passed into normalisedValue
-      //rest seems to be correct
-      std::cerr << "Num rotations: " << normal_val << std::endl;
-      std::cerr << "Result before: " << result << std::endl;
-      result = current->getMapping(current->normalisedValue(result - normal_val));
-      std::cerr << "Result after: " << result << std::endl;
-    }
-
-    //normalise input into next rotor
-    normal_val = current->numRotations();
+    if (reversed) result = current->getReverseMapping(result);
+    else result = current->getMapping(result);
   }
   return result;
 }
