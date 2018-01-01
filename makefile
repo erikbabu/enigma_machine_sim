@@ -5,10 +5,10 @@ OBJS= Main.o EnigmaMachine.o Reflector.o Rotor.o Plugboard.o Utils.o MappingTool
 enigma: $(OBJS)
 	$(CC) $(CFLAGS) -o enigma $(OBJS)
 
-Main.o: Main.cpp EnigmaMachine.hpp
+Main.o: Main.cpp EnigmaMachine.hpp Utils.hpp
 	$(CC) $(CFLAGS) -c Main.cpp
 
-EnigmaMachine.o: EnigmaMachine.cpp EnigmaMachine.hpp Reflector.hpp Rotor.hpp Plugboard.hpp Utils.hpp
+EnigmaMachine.o: EnigmaMachine.cpp EnigmaMachine.hpp Reflector.hpp Rotor.hpp Plugboard.hpp
 	$(CC) $(CFLAGS) -c EnigmaMachine.cpp
 
 Reflector.o: Reflector.cpp Reflector.hpp MappingTool.hpp
@@ -17,10 +17,10 @@ Reflector.o: Reflector.cpp Reflector.hpp MappingTool.hpp
 MappingTool.o: MappingTool.cpp MappingTool.hpp
 	$(CC) $(CFLAGS) -c MappingTool.cpp
 
-Rotor.o: Rotor.cpp Rotor.hpp
+Rotor.o: Rotor.cpp Rotor.hpp MappingTool.hpp
 	$(CC) $(CFLAGS) -c Rotor.cpp
 
-Plugboard.o: Plugboard.cpp Plugboard.hpp
+Plugboard.o: Plugboard.cpp Plugboard.hpp MappingTool.hpp
 	$(CC) $(CFLAGS) -c Plugboard.cpp
 
 Utils.o: Utils.cpp Utils.hpp
