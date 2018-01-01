@@ -103,13 +103,12 @@ template<typename Iterator> vector<string> getRotorConfigs(
     auto config = *rotor_start++;
 
     if (r_c.find(config) != r_c.end())
-      r_c.insert(config);
-    else
     {
       cerr << "Cannot use the same rotor more than once!" << endl;
       exit(1);
     }
 
+    r_c.insert(config);
     rotor_configs.push_back(config);
   }
   return rotor_configs;
