@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <memory>
+#include <set>
 #include "EnigmaMachine.hpp"
 #include "Utils.hpp"
 
@@ -15,6 +16,7 @@ using std::string;
 using std::cin;
 using std::istream;
 using std::distance;
+using std::set;
 
 typedef shared_ptr<EnigmaMachine> em_s_ptr;
 
@@ -94,7 +96,22 @@ template<typename Iterator> vector<string> getRotorConfigs(
   Iterator rotor_start, Iterator rotor_end)
 {
   vector<string> rotor_configs;
-  while (rotor_start != rotor_end) rotor_configs.push_back(*rotor_start++);
+  //set needed to check duplicate rotors not used
+  set<string> r_c;
+  while (rotor_start != rotor_end)
+  {
+    auto config = *rotor_start++;
+
+    if (r_c.find(config) != r_c.end())
+      r_c.insert(config);
+    else
+    {
+      cerr << "Cannot use the same rotor more than once!" << endl;
+      exit(1);
+    }
+
+    rotor_configs.push_back(config);
+  }
   return rotor_configs;
 }
 
