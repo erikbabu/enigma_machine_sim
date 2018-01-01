@@ -38,7 +38,7 @@ vector<char> getRotorNotchConfigs(istream& in, int num_rotors);
 vector<char> getCipherText(istream& in, em_s_ptr& em);
 
 //params:
-//cipher - the encrypted chars to be displayed to std out
+//cipher - the encrypted chars to be displayed (in blocks of 5) to std out
 void display_cipher(vector<char>& cipher);
 
 int main(int argc, char **argv)
@@ -141,6 +141,17 @@ vector<char> getCipherText(istream& in, em_s_ptr& em)
 
 void display_cipher(vector<char>& cipher)
 {
-  for(auto it = cipher.begin(); it != cipher.end(); ++it) cout << *it;
+  int counter = 0;
+  const int grouping_size = 5;
+  for(auto it = cipher.begin(); it != cipher.end(); ++it)
+  {
+    cout << *it;
+    ++counter;
+    if (counter == grouping_size)
+    {
+      counter = 0;
+      cout << " ";
+    }
+  }
   cout << endl;
 }
