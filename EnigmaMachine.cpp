@@ -112,8 +112,7 @@ template<typename Iterator> int EnigmaMachine::passThroughAllRotors(
   for (Iterator it = start; it != end; ++it)
   {
     shared_ptr<Rotor> current = *it;
-    if (reversed) result = current->getReverseMapping(result);
-    else result = current->getMapping(result);
+    result = reversed ? current->getReverseMapping(result) : current->getMapping(result);
   }
   return result;
 }
