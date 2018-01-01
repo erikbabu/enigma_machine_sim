@@ -5,12 +5,15 @@ using std::vector;
 using std::string;
 using std::shared_ptr;
 using std::make_shared;
+using std::cerr;
+using std::endl;
 
 EnigmaMachine::EnigmaMachine(const vector<string>& rotor_configs,
+  const vector<char>& notch_configs,
   const string& plugboard_config)
 {
   initialisePlugboard(plugboard_config);
-  initialiseRotors(rotor_configs);
+  initialiseRotors(rotor_configs, notch_configs);
 }
 
 void EnigmaMachine::initialisePlugboard(const string& plugboard_config)
@@ -18,11 +21,20 @@ void EnigmaMachine::initialisePlugboard(const string& plugboard_config)
   plugboard = make_shared<Plugboard>(plugboard_config);
 }
 
-void EnigmaMachine::initialiseRotors(const vector<string>& rotor_configs)
+void EnigmaMachine::initialiseRotors(const vector<string>& rotor_configs,
+  const vector<char>& notch_configs)
 {
+  //validate that num rotors is num configs
+  if (rotor_configs.size() != notch_configs.size())
+  {
+    cerr << "Number of rotors does not equal number of notch configurations!"<< endl;
+    exit(1);
+  }
+  auto notch_iterator = notch_configs.begin();
+
   for (auto it = rotor_configs.begin(); it != rotor_configs.end(); ++it)
   {
-    shared_ptr<Rotor> rotor = make_shared<Rotor>(*it);
+    shared_ptr<Rotor> rotor = make_shared<Rotor>(*it, *notch_iterator++);
     rotors.push_back(rotor);
   }
 }

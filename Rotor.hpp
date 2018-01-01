@@ -9,7 +9,7 @@ class Rotor : public MappingTool
 
     //params:
     //filename - filename containing rotor configuration
-    Rotor(const std::string& filename, const int notch_position=0);
+    Rotor(const std::string& filename, const char notch_position);
 
     //"rotates" the rotor by one turn.
     void rotate();

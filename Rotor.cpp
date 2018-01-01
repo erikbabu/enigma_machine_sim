@@ -7,18 +7,14 @@ using std::cerr;
 using std::vector;
 using std::endl;
 
-Rotor::Rotor(const string& filename, const int notch_position) :
+Rotor::Rotor(const string& filename, const char notch_position) :
   MappingTool(filename)
 {
   validateMappingsSize();
   initialiseMap();
-
-  //set up rotors to match notch config
-  for (int i = 0; i < notch_position; ++i)
-  {
-    leftRotate();
-    normalise();
-  }
+  
+  //set up rotor to match notch config
+  for (int i = 0; i < getIndex(notch_position); ++i) leftRotate();
 }
 
 void Rotor::validateMappingsSize() const

@@ -3,6 +3,7 @@
 #include <vector>
 #include <memory>
 #include "EnigmaMachine.hpp"
+#include "Utils.hpp"
 
 using std::cerr;
 using std::cout;
@@ -13,6 +14,7 @@ using std::vector;
 using std::string;
 using std::cin;
 using std::istream;
+using std::distance;
 
 typedef shared_ptr<EnigmaMachine> em_s_ptr;
 
@@ -23,6 +25,11 @@ typedef shared_ptr<EnigmaMachine> em_s_ptr;
 template<typename Iterator> vector<string> getRotorConfigs(
   Iterator rotor_start, Iterator rotor_end);
 
+//parms:
+//in - reference to std input
+//num_configs - the number of rotors
+vector<char> getRotorNotchConfigs(istream& in, int num_rotors);
+
 //params:
 //in - reference to std input
 //em - reference to enigma machine
@@ -30,21 +37,16 @@ template<typename Iterator> vector<string> getRotorConfigs(
 vector<char> getCipherText(istream& in, em_s_ptr& em);
 
 //params:
-//input - the character being tested
-//returns whether or not character is in range A-Z (inclusive)
-bool isValidInput(char input);
-
-//params:
 //cipher - the encrypted chars to be displayed to std out
 void display_cipher(vector<char>& cipher);
 
 int main(int argc, char **argv)
 {
-  //program requires optional rotor args and 1 plugboard arg
+  //program requires rotor args (optional), 1 plugboard arg, 1 reflector arg
   if (argc < 2)
   {
     cerr << "Invalid args entered. Please ensure program is invoked like:\n" <<
-      "./enigma <rotor_config>* <plugboard_config>" << endl;
+      "./enigma <rotor_config>* <plugboard_config> <reflector_config>" << endl;
     exit(1);
   }
 
@@ -53,12 +55,28 @@ int main(int argc, char **argv)
   auto rotor_end = argv + argc - 1;
   auto plugboard_config = argv[argc - 1];
 
+  int num_rotors = distance(rotor_start, rotor_end);
+  vector<char> notch_configs;
+  if (num_rotors > 0)
+  {
+    //get rotor notch configs
+    cout << "Please enter your rotor configurations\n e.g. BJK if you have 3 rotors.\n"
+      << "Please ensure that the number of configurations = number of rotors:"
+      << endl;
+
+    notch_configs = getRotorNotchConfigs(cin, num_rotors);
+  }
+
   //rotor configs are every file except arg0(filename) and last arg(plugboard)
   vector<string> rotor_configs = getRotorConfigs(rotor_start, rotor_end);
 
   //set up enigma machine
   em_s_ptr em_ptr =
-    make_shared<EnigmaMachine>(rotor_configs, plugboard_config);
+    make_shared<EnigmaMachine>(rotor_configs, notch_configs, plugboard_config);
+
+  cout << "Please enter the message you would like to encrypt, followed by ctrl + d:"
+    << endl;
+
   vector<char> cipher = getCipherText(cin, em_ptr);
 
   //separate input from output
@@ -78,29 +96,30 @@ template<typename Iterator> vector<string> getRotorConfigs(
   return rotor_configs;
 }
 
+vector<char> getRotorNotchConfigs(istream& in, int num_rotors)
+{
+  char c;
+  vector<char> notch_configs;
+  int counter = 0;
+  while (counter++ < num_rotors && (in >> c))
+  {
+    validateInput(getIndex(c));
+    notch_configs.push_back(c);
+  }
+
+  return notch_configs;
+}
+
 vector<char> getCipherText(istream& in, em_s_ptr& em)
 {
   char input;
   vector<char> cipher;
   while (in >> input)
   {
-    if (isValidInput(input))
-    {
-      //encrypt character and store
-      cipher.push_back(em->encrypt(input));
-    }
-    else
-    {
-      cerr << "The char: " << input << " is not in range A-Z. Aborting!" << endl;
-      exit(1);
-    }
+    validateInput(getIndex(input));
+    cipher.push_back(em->encrypt(input));
   }
-
   return cipher;
-}
-
-bool isValidInput(char input) {
-  return input >= 'A' && input <= 'Z';
 }
 
 void display_cipher(vector<char>& cipher)

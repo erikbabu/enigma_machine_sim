@@ -17,8 +17,10 @@ class EnigmaMachine
 
     //params:
     //rotor_configs - filenames of all rotor files
+    //notch_configs - notch configurations for each rotor
     //plugboard_config - filename of plugboard file
     EnigmaMachine(const std::vector<std::string>& rotor_configs,
+      const std::vector<char>& notch_configs,
       const std::string& plugboard_config);
 
     //params:
@@ -39,7 +41,8 @@ class EnigmaMachine
     std::shared_ptr<Plugboard> plugboard;
 
     //given the rotorfile(s), creates and sets up rotors
-    void initialiseRotors(const std::vector<std::string>& rotor_configs);
+    void initialiseRotors(const std::vector<std::string>& rotor_configs,
+      const std::vector<char>& notch_configs);
 
     //given the plugboard config file, creates and sets up plugboard
     void initialisePlugboard(const std::string& plugboard_config);
